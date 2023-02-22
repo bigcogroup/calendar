@@ -46,12 +46,16 @@
 			var day = 1;
 			for (var j = 0; j < 7; j++) {
 				if (j < firstDay) {
+                    
 					var tdDate = document.createElement('td');
 					tdDate.innerHTML = '';
 					trDates.appendChild(tdDate);
+                    
 				} else {
 					var tdDate = document.createElement('td');
-					tdDate.innerHTML = day;
+                    var dateButton = document.createElement('button');
+                    dateButton.innerHTML = day;
+                    tdDate.appendChild(dateButton);
 					if (day === today.getDate() && month === today.getMonth()) {
 						tdDate.style.backgroundColor = '#ffffcc';
 					}
@@ -68,11 +72,14 @@
 				for (var j = 0; j < 7; j++) {
 					if (day > daysInMonth) {
 						var tdNextDate = document.createElement('td');
+                        
 						tdNextDate.innerHTML = '';
 						trNextDates.appendChild(tdNextDate);
 					} else {
 						var tdNextDate = document.createElement('td');
-						tdNextDate.innerHTML = day;
+                        var nextDateButton = document.createElement('button');
+                        nextDateButton.innerHTML = day;
+                        tdNextDate.appendChild(nextDateButton);
 						if (day === today.getDate() && month === today.getMonth()) {
 							tdNextDate.style.backgroundColor = '#ffffcc';
 						}
@@ -84,6 +91,7 @@
 			}
 		}
 		document.body.appendChild(table);
+    
 	</script>
 </body>
 </html>
