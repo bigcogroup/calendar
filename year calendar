@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>2023 Calendar</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+		th, td {
+			padding: 10px;
+			text-align: center;
+			border: 1px solid black;
+		}
+		th {
+			background-color: #ccc;
+		}
+	</style>
+</head>
+<body>
+	<h1>2023 Calendar</h1>
+	<script>
+		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+		var daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+		var today = new Date();
+		var year = 2023;
+		var table = document.createElement('table');
+		for (var i = 0; i < months.length; i++) {
+			var month = i;
+			var firstDay = new Date(year, month, 1).getDay();
+			var daysInMonth = new Date(year, month + 1, 0).getDate();
+			var trMonth = document.createElement('tr');
+			var thMonth = document.createElement('th');
+			thMonth.setAttribute('colspan', '7');
+			thMonth.innerHTML = months[month];
+			trMonth.appendChild(thMonth);
+			table.appendChild(trMonth);
+			var trDays = document.createElement('tr');
+			for (var j = 0; j < daysOfWeek.length; j++) {
+				var thDay = document.createElement('th');
+				thDay.innerHTML = daysOfWeek[j];
+				trDays.appendChild(thDay);
+			}
+			table.appendChild(trDays);
+			var trDates = document.createElement('tr');
+			var day = 1;
+			for (var j = 0; j < 7; j++) {
+				if (j < firstDay) {
+					var tdDate = document.createElement('td');
+					tdDate.innerHTML = '';
+					trDates.appendChild(tdDate);
+				} else {
+					var tdDate = document.createElement('td');
+					tdDate.innerHTML = day;
+					if (day === today.getDate() && month === today.getMonth()) {
+						tdDate.style.backgroundColor = '#ffffcc';
+					}
+					day++;
+					trDates.appendChild(tdDate);
+					if (day > daysInMonth) {
+						break;
+					}
+				}
+			}
+			table.appendChild(trDates);
+			while (day <= daysInMonth) {
+				var trNextDates = document.createElement('tr');
+				for (var j = 0; j < 7; j++) {
+					if (day > daysInMonth) {
+						var tdNextDate = document.createElement('td');
+						tdNextDate.innerHTML = '';
+						trNextDates.appendChild(tdNextDate);
+					} else {
+						var tdNextDate = document.createElement('td');
+						tdNextDate.innerHTML = day;
+						if (day === today.getDate() && month === today.getMonth()) {
+							tdNextDate.style.backgroundColor = '#ffffcc';
+						}
+						day++;
+						trNextDates.appendChild(tdNextDate);
+					}
+				}
+				table.appendChild(trNextDates);
+			}
+		}
+		document.body.appendChild(table);
+	</script>
+</body>
+</html>
