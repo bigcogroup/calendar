@@ -1,97 +1,252 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>2023 Calendar</title>
-	<style>
-		table {
-			border-collapse: collapse;
-			width: 100%;
+    <title>2023 Calendar</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        th {
+            background-color: #ccc;
+        }
+        .modal {
+			display: none; /* Hidden by default */
+			position: fixed; /* Stay in place */
+			z-index: 1; /* Sit on top */
+			left: 0;
+			top: 0;
+			width: 100%; /* Full width */
+			height: 100%; /* Full height */
+			overflow: auto; /* Enable scroll if needed */
+			background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 		}
-		th, td {
-			padding: 10px;
-			text-align: center;
-			border: 1px solid black;
+
+		/* Modal content */
+		.modal-content {
+			background-color: #fefefe;
+			margin: 15% auto; /* 15% from the top and centered */
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%; /* Could be more or less, depending on screen size */
 		}
-		th {
-			background-color: #ccc;
+
+		/* Close button */
+		.close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
 		}
-	</style>
+
+		.close:hover,
+		.close:focus {
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+		}
+    </style>
 </head>
+
 <body>
-	<h1>2023 Calendar</h1>
-	<script>
-		var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-		var daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-		var today = new Date();
-		var year = 2023;
-		var table = document.createElement('table');
-		for (var i = 0; i < months.length; i++) {
-			var month = i;
-			var firstDay = new Date(year, month, 1).getDay();
-			var daysInMonth = new Date(year, month + 1, 0).getDate();
-			var trMonth = document.createElement('tr');
-			var thMonth = document.createElement('th');
-			thMonth.setAttribute('colspan', '7');
-			thMonth.innerHTML = months[month];
-			trMonth.appendChild(thMonth);
-			table.appendChild(trMonth);
-			var trDays = document.createElement('tr');
-			for (var j = 0; j < daysOfWeek.length; j++) {
-				var thDay = document.createElement('th');
-				thDay.innerHTML = daysOfWeek[j];
-				trDays.appendChild(thDay);
-			}
-			table.appendChild(trDays);
-			var trDates = document.createElement('tr');
-			var day = 1;
-			for (var j = 0; j < 7; j++) {
-				if (j < firstDay) {
+    <button onclick="openModal()">Open Modal</button>
+    <div id="myModal" class="modal">
+    
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p>This is a modal. Click the close button or the background to close it.</p>
+        </div>
+    
+    </div>
+    <h1>2023 Calendar</h1>
+    <script>
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        var today = new Date();
+        var year = 2023;
+        var table = document.createElement('table');
+        for (var i = 0; i < months.length; i++) {
+            var month = i;
+            var firstDay = new Date(year, month, 1).getDay();
+            var daysInMonth = new Date(year, month + 1, 0).getDate();
+            var trMonth = document.createElement('tr');
+            var thMonth = document.createElement('th');
+            thMonth.setAttribute('colspan', '7');
+            thMonth.innerHTML = months[month];
+            trMonth.appendChild(thMonth);
+            table.appendChild(trMonth);
+            var trDays = document.createElement('tr');
+            for (var j = 0; j < daysOfWeek.length; j++) {
+                var thDay = document.createElement('th');
+                thDay.innerHTML = daysOfWeek[j];
+                trDays.appendChild(thDay);
+            }
+            table.appendChild(trDays);
+            var trDates = document.createElement('tr');
+            var day = 1;
+            for (var j = 0; j < 7; j++) {
+                if (j < firstDay) {
+
+                    var tdDate = document.createElement('td');
+                    tdDate.innerHTML = '';
+                    trDates.appendChild(tdDate);
+
+                } else {
+                    var tdDate = document.createElement('td');
                     
-					var tdDate = document.createElement('td');
-					tdDate.innerHTML = '';
-					trDates.appendChild(tdDate);
-                    
-				} else {
-					var tdDate = document.createElement('td');
                     var dateButton = document.createElement('button');
+                    
+                    dateButton.setAttribute = ("id", "btn");
                     dateButton.innerHTML = day;
                     tdDate.appendChild(dateButton);
-					if (day === today.getDate() && month === today.getMonth()) {
-						tdDate.style.backgroundColor = '#ffffcc';
-					}
-					day++;
-					trDates.appendChild(tdDate);
-					if (day > daysInMonth) {
-						break;
-					}
-				}
-			}
-			table.appendChild(trDates);
-			while (day <= daysInMonth) {
-				var trNextDates = document.createElement('tr');
-				for (var j = 0; j < 7; j++) {
-					if (day > daysInMonth) {
-						var tdNextDate = document.createElement('td');
-                        
-						tdNextDate.innerHTML = '';
-						trNextDates.appendChild(tdNextDate);
-					} else {
-						var tdNextDate = document.createElement('td');
+
+                    if (day === today.getDate() && month === today.getMonth()) {
+                        tdDate.style.backgroundColor = '#ffffcc';
+                    }
+                    day++;
+                    trDates.appendChild(tdDate);
+                    if (day > daysInMonth) {
+                        break;
+                    }
+                }
+            }
+            table.appendChild(trDates);
+            while (day <= daysInMonth) {
+                var trNextDates = document.createElement('tr');
+                for (var j = 0; j < 7; j++) {
+                    if (day > daysInMonth) {
+                        var tdNextDate = document.createElement('td');
+
+                        tdNextDate.innerHTML = '';
+                        trNextDates.appendChild(tdNextDate);
+                    } else {
+                        var tdNextDate = document.createElement('td');
                         var nextDateButton = document.createElement('button');
+                        nextDateButton.setAttribute = ("id", "nextbtn");
                         nextDateButton.innerHTML = day;
                         tdNextDate.appendChild(nextDateButton);
-						if (day === today.getDate() && month === today.getMonth()) {
-							tdNextDate.style.backgroundColor = '#ffffcc';
-						}
-						day++;
-						trNextDates.appendChild(tdNextDate);
-					}
-				}
-				table.appendChild(trNextDates);
-			}
-		}
-		document.body.appendChild(table);
-    
-	</script>
+                        
+                        if (day === today.getDate() && month === today.getMonth()) {
+                            tdNextDate.style.backgroundColor = '#ffffcc';
+                        }
+                        day++;
+                        trNextDates.appendChild(tdNextDate);
+                    }
+                }
+                table.appendChild(trNextDates);
+            }
+        }
+        document.body.appendChild(table);
+
+        const modal = document.getElementById('myModal');
+
+            // Get the close button
+            const closeButton = modal.querySelector('.close');
+
+            // Open the modal
+            function openModal() {
+                modal.style.display = 'block';
+            }
+
+            // Close the modal
+            function closeModal() {
+                modal.style.display = 'none';
+            }
+
+            // Close the modal when the user clicks outside of it
+            window.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Close the modal when the user presses the escape key
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && modal.style.display === 'block') {
+                    closeModal();
+                }
+            });
+
+        dateButton.addEventListener("click", function () {
+
+            openModal();
+
+            const modal = document.getElementById('myModal');
+
+            // Get the close button
+            const closeButton = modal.querySelector('.close');
+
+            // Open the modal
+            function openModal() {
+                modal.style.display = 'block';
+            }
+
+            // Close the modal
+            function closeModal() {
+                modal.style.display = 'none';
+            }
+
+            // Close the modal when the user clicks outside of it
+            window.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Close the modal when the user presses the escape key
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && modal.style.display === 'block') {
+                    closeModal();
+                }
+            });
+                // Do something when the button is clicked
+            });
+        
+         nextDateButton.addEventListener("click", function () {
+
+                openModal();
+
+                const modal = document.getElementById('myModal');
+
+                // Get the close button
+                const closeButton = modal.querySelector('.close');
+
+                // Open the modal
+                function openModal() {
+                    modal.style.display = 'block';
+                }
+
+                // Close the modal
+                function closeModal() {
+                    modal.style.display = 'none';
+                }
+
+                // Close the modal when the user clicks outside of it
+                window.addEventListener('click', function (event) {
+                    if (event.target === modal) {
+                        closeModal();
+                    }
+                });
+
+                // Close the modal when the user presses the escape key
+                document.addEventListener('keydown', function (event) {
+                    if (event.key === 'Escape' && modal.style.display === 'block') {
+                        closeModal();
+                    }
+                });
+                // Do something when the button is clicked
+            });   
+    </script>
 </body>
+
 </html>
